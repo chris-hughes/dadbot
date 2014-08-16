@@ -1,12 +1,13 @@
-function route(handle, pathname){
-	console.log("routing "+pathname);
+function route(handle, pathname, response){
 
-	console.log("XXX "+handle[pathname]);
-
-	if (!typeof handle[pathname]==='function') {
-		handle[pathname]();
+	if (typeof handle[pathname]==='function') {
+		handle[pathname](response);
 	} else {
 		console.log("No request handler for "+pathname);
+
+		response.writeHead(404, {"Content-Type": "text/plain"});
+		response.write("404: nothing here");
+		response.end();
 	}
 }
 
