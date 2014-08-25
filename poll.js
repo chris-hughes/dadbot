@@ -1,10 +1,13 @@
 var http = require('http');
+
+// visit this to see what the json looks like
 var url = 'http://www.reddit.com/r/AskReddit/comments.json';
 
 var last_id;
 
 function poll(){
 
+	// add a random query to get around caching - query doesn't affect anything
 	http.get(url + '?' + Math.random(), function(res){
 
 		var data = ''
@@ -25,14 +28,14 @@ function poll(){
 				})
 				.indexOf(last_id)
 
-			// set the last id
+			// set the last id (which is the first item)
 			last_id = items[0].data.id;
 
-			if(position > -1)
+			// remove any repeated comments from previous polls
+			if (position > -1){
 				items = items.slice(0, position);
-
-
-
+			}
+				
 			console.log('#------------')
 			items.forEach(function(item){
 				console.log("-----\n\n" +item.data.body)
