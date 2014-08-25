@@ -1,27 +1,37 @@
-var view = require("./views/main");
+var http = require('http'),
+    view = require("./views/main"),
+    util = require('util');
 
 function home(pathname, response){
-	console.log("Request Handler 'home' was called");
 	var body = view.main(pathname);
-
 	response.writeHead(200, {"Content-Type": "text/html"});
 	response.write(body);
 	response.end();
 }
 
 function user(pathname, response){
-	console.log("Request Handler 'user' was called");
-	var body = view.main(pathname);
 
+	var test = http.get("http://www.nodejs.org", function(res) {
+		console.log("Got response: " + res.statusCode);
+
+		console.log('test: '+util.inspect(res));
+
+	}).on('error', function(e) {
+		console.log("Got error: " + e.message);
+	});
+
+	// console.log('test: '+util.inspect(test));
+
+
+	var body = view.main(pathname);
 	response.writeHead(200, {"Content-Type": "text/html"});
 	response.write(body);
 	response.end();
+
 }
 
 function subreddit(pathname, response){
-	console.log("Request Handler 'subreddit' was called");
 	var body = view.main(pathname);
-
 	response.writeHead(200, {"Content-Type": "text/html"});
 	response.write(body);
 	response.end();
