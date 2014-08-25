@@ -11,6 +11,7 @@ handle["/"] = requestHandlers.home;
 handle["/home"] = requestHandlers.home;
 handle["/user"] = requestHandlers.user;
 handle["/subreddit"] = requestHandlers.subreddit;
+handle["/query"] = requestHandlers.query;
 
 // start server
 

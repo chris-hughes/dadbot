@@ -1,5 +1,5 @@
 function subreddit(){
-	return "SUBREDDIT view has been called";
+	return "<h1>SUBREDDIT view has been called</h1>";
 }
 
 exports.subreddit = subreddit;

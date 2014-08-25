@@ -17,7 +17,7 @@ function main(pathname){
 			    'charset=UTF-8" />'+
 			    '</head>'+
 			    '<body>'+
-			    '<h1>'+viewSelect[pathname]()+'</h1>'+
+			    viewSelect[pathname]()+
 			    '</body>'+
 			    '</html>';
 

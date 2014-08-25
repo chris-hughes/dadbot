@@ -1,7 +1,7 @@
 var http = require('http'),
 	querystring = require('querystring');
 
-// visit this to see what the json looks like
+// visit this if you need to see what the json looks like
 var url = 'http://www.reddit.com/r/AskReddit/comments.json';
 
 var last_id;
@@ -37,9 +37,11 @@ function poll(){
 				items = items.slice(0, position);
 			}
 				
-			console.log('#------------')
+			console.log('#------------ '+items.length);
 			items.forEach(function(item){
-				console.log("-----\n\n" +item.data.body)
+				if (item.data.body.substring(0,3)=="I'm"){
+					console.log("-----\n\n" +item.data.body)
+				}
 			})
 
 			
@@ -74,7 +76,7 @@ var test = {
 
 function gogogo(){
 
-	// login and get modhash
+	// login and get modhash and cookie
 	var req = http.request(test, function(res){
 
 		var data = ''
@@ -143,5 +145,5 @@ function postComment(modhash, cookie){
 
 }
 
-gogogo();
-// poll();
+// gogogo();
+poll();

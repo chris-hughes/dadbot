@@ -1,5 +1,5 @@
 function user(){
-	return "USER view has been called";
+	return "<h1>USER view has been called</h1>";
 }
 
 exports.user = user;
