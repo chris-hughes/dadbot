@@ -12,7 +12,7 @@ function startServer(route, handle){
 		var pathname = url.parse(request.url).pathname;
 		console.log("Request for "+pathname);
 
-		route(handle, pathname, response);
+		route(handle, request.url, response);
 
 
 	}).listen(8888, function(){

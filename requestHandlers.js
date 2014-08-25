@@ -1,4 +1,6 @@
 var http = require('http'),
+	url  = require('url'),
+	querystring = require('querystring'),
     view = require("./views/main");
 
 function home(pathname, response){
@@ -36,13 +38,18 @@ function subreddit(pathname, response){
 	response.end();
 }
 
-function query(pathname, response){
+function query(requrl, response){
 
-	// var body = view.main(pathname);
-	var body = view.main('/user');
-	response.writeHead(200, {"Content-Type": "text/html"});
-	response.write(body);
-	response.end();
+	var query = querystring.parse(url.parse(requrl).query);
+
+	if (query.Subreddit && !query.User){
+		subreddit('/subreddit', response);
+	} else if (!query.Subreddit && query.User){
+		user('/user', response);
+	} else {
+		home('/', response);
+	}
+
 }
 
 exports.home = home;
