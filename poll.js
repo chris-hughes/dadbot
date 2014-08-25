@@ -1,4 +1,5 @@
-var http = require('http');
+var http = require('http'),
+	querystring = require('querystring');
 
 // visit this to see what the json looks like
 var url = 'http://www.reddit.com/r/AskReddit/comments.json';
@@ -53,5 +54,94 @@ function poll(){
 	});
 }
 
+var query = {
+	api_type: 'json',
+	passwd : 'calvinball',
+	rem: 0,
+	user: 'dad_knows_best'
+};
 
-poll();
+var test = {
+	hostname: 'www.reddit.com',
+	port: 80,
+	// path: '/api/login/dad_knows_best?user=dad_knows_best&passwd=calvinball&api_type=json',
+	path: '/api/login/'+query.user+'?'+querystring.stringify(query),
+	method: 'POST'
+
+};
+
+
+
+function gogogo(){
+
+	// login and get modhash
+	var req = http.request(test, function(res){
+
+		var data = ''
+	  	res.on('data', function (chunk) {
+	    	data += chunk;
+		});
+
+		res.on('end', function(){
+			var obj = JSON.parse(data);
+			console.log(obj);
+
+			var modhash = obj.json.data.modhash;
+			var cookie = obj.json.data.cookie;
+			postComment(modhash, cookie);
+		});
+
+	});
+
+	req.on('error', function(e) {
+  		console.log('problem with request: ' + e.message);
+	});
+
+	req.end();
+}
+
+function postComment(modhash, cookie){
+
+	var q = {
+		api_type: 'json', 
+		text : 'testing',
+		thing_id: 't3_2ej09h',
+		// uh modhash
+	}
+
+	var postComment = {
+		hostname: 'www.reddit.com',
+		port: 80,
+		// path: '/api/login/dad_knows_best?user=dad_knows_best&passwd=calvinball&api_type=json',
+		path: '/api/comment?'+querystring.stringify(q),
+		method: 'POST',
+		headers: {
+			'X-Modhash' : modhash,
+			'Cookie' : 'reddit_session=' + cookie
+		}
+	};
+	var req = http.request(postComment, function(res){
+		console.log(res);
+
+		var data = ''
+	  	res.on('data', function (chunk) {
+	    	data += chunk;
+		});
+
+		res.on('end', function(){
+			var obj = JSON.parse(data);
+			console.log(obj);
+		});
+
+	});
+
+	req.on('error', function(e) {
+  		console.log('problem with request: ' + e.message);
+	});
+
+	req.end();
+
+}
+
+gogogo();
+// poll();
