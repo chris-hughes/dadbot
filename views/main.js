@@ -8,7 +8,7 @@ viewSelect["/home"] = home.home;
 viewSelect["/user"] = user.user;
 viewSelect["/subreddit"] = subreddit.subreddit;
 
-function main(pathname){
+function main(pathname, data){
 
 
 	var body =  '<html>'+
@@ -17,7 +17,7 @@ function main(pathname){
 			    'charset=UTF-8" />'+
 			    '</head>'+
 			    '<body>'+
-			    viewSelect[pathname]()+
+			    viewSelect[pathname](data)+
 			    '</body>'+
 			    '</html>';
 

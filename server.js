@@ -10,7 +10,6 @@ function startServer(route, handle){
 	http.createServer(function(request, response) {
 
 		var pathname = url.parse(request.url).pathname;
-		console.log("Request for "+pathname);
 
 		route(handle, request.url, response);
 

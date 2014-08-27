@@ -1,11 +1,14 @@
-url = require('url');
+var url = require('url'),
+	querystring = require('querystring');
+
 
 function route(handle, requrl, response){
 
 	var pathname = url.parse(requrl).pathname;
+	var query = querystring.parse(url.parse(requrl).query);
 
 	if (typeof handle[pathname]==='function') {
-		pathname=='/query' ? handle[pathname](requrl, response) : handle[pathname](pathname, response);
+		handle[pathname](pathname, query, response);
 	} else {
 		console.log("No request handler for "+pathname);
 
